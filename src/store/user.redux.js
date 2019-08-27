@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {getRedirectTo} from "../util";
 
 //constants
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -15,7 +16,8 @@ const defaultState = {
 export const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      return {...state,msg:'',...action.payload};
+      console.log(action.payload)
+      return {...state,msg:'',redirectTo:getRedirectTo(action.payload),...action.payload};
     case ERROR_MSG:
       return {...state,msg:action.msg}
     default:
@@ -25,7 +27,8 @@ export const userReducer = (state = defaultState, action) => {
 
 //actionCreators
 function authSuccess(obj) {
-  return {type:AUTH_SUCCESS,payload:obj}
+  const {pwd,...data} = obj;
+  return {type:AUTH_SUCCESS,payload:data}
 }
 
 function errorMsg(msg) {

@@ -3,6 +3,7 @@ import Logo from '../../components/logo/logo'
 import {List,InputItem,WingBlank,WhiteSpace,Button,Radio,Toast} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {register as userRegister} from "../../store/user.redux";
+import {Redirect} from 'react-router-dom'
 
 const RadioItem = Radio.RadioItem;
 
@@ -28,6 +29,7 @@ class Register extends React.Component{
   render(){
     return(
       <div>
+        {this.props.redirectTo?<Redirect to={this.props.redirectTo} />:null}
         <Logo/>
         <h2>注册页面</h2>
         {this.props.msg?<p className='error-msg'>{this.props.msg}</p>:null}
@@ -56,7 +58,8 @@ class Register extends React.Component{
 }
 
 const mapState = (state)=>({
-  msg:state.user.msg
+  msg:state.user.msg,
+  redirectTo:state.user.redirectTo
 })
 
 const mapDispatch = (dispatch)=>({

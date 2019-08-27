@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const User = require('../models/user')
+const User = require('../models/user');
+const utils = require('utility')
 
 //注册
 router.post('/register', (req, res) => {
@@ -21,7 +22,7 @@ router.post('/register', (req, res) => {
        if(u){
          return res.json({code:1,msg:'用户名重复'})
        }
-       const registerUser = new User({user,pwd,type});
+       const registerUser = new User({user,type,pwd:utils.md5(pwd)});
        registerUser.save().then(doc=>{
          if(doc){
            return res.json({code:0,msg:'注册用户成功'})
@@ -47,13 +48,16 @@ router.post('/login',(req,res)=>{
   }
   User.findOne({user}).then(u=>{
     if(u){
-      if(u.pwd!==pwd){
+      if(u.pwd!==utils.md5(pwd)){
         return res.json({
           code:1,
           msg:'用户名或密码错误'
         })
       }
-      console.log(u);
+      res.json({
+        code:0,
+        data:u
+      })
     }else {
       return res.json({
         code:1,
