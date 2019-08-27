@@ -3,18 +3,24 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import {BrowserRouter,Route,Redirect,Switch} from 'react-router-dom'
 import store from './store'
+import './config'
 import './index.css';
+import 'antd-mobile/dist/antd-mobile.css'
+
+
 import Login from './pages/login/login'
 import Register from './pages/register/register'
+
+
 
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Switch>
-          <Route path='/login' componnet={Login} />
-          <Route path='/Register' componnet={Register} />
-        </Switch>
+
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+
       </div>
     </BrowserRouter>
   </Provider>

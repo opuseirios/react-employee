@@ -42,5 +42,27 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ]
+    ]
+  },
+  "proxy": "http://localhost:9000"
 }
