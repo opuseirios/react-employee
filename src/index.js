@@ -10,6 +10,7 @@ import 'antd-mobile/dist/antd-mobile.css'
 
 import Login from './pages/login/login'
 import Register from './pages/register/register'
+import AuthRoute from './components/authRoute/authRoute'
 
 
 
@@ -17,7 +18,7 @@ ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-
+          <AuthRoute/>
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
 

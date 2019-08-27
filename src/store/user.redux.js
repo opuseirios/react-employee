@@ -4,13 +4,14 @@ import {getRedirectTo} from "../util";
 //constants
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
+const LOAD_DATA = 'LOAD_DATA'
 
 //reducer
 const defaultState = {
   msg: '',
   data: '',
   redirectTo: '',
-  user: ''
+  user: '',
 }
 
 export const userReducer = (state = defaultState, action) => {
@@ -19,7 +20,9 @@ export const userReducer = (state = defaultState, action) => {
       console.log(action.payload)
       return {...state,msg:'',redirectTo:getRedirectTo(action.payload),...action.payload};
     case ERROR_MSG:
-      return {...state,msg:action.msg}
+      return {...state,msg:action.msg};
+    case LOAD_DATA:
+      return {...state,...action.payload}
     default:
       return defaultState;
   }
@@ -80,4 +83,8 @@ export function login({user,pwd}) {
       dispatch(errorMsg(e))
     })
   }
+}
+
+export function loadData(userinfo) {
+   return {type:LOAD_DATA,payload: userinfo}
 }
