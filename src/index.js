@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
-import {BrowserRouter,Route,Redirect,Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 import store from './store'
 import './config'
 import './index.css';
@@ -10,18 +10,22 @@ import 'antd-mobile/dist/antd-mobile.css'
 
 import Login from './pages/login/login'
 import Register from './pages/register/register'
+import BossInfo from './pages/bossinfo/bossinfo'
+import GeniusInfo from './pages/geniusInfo/geniusInfo'
 import AuthRoute from './components/authRoute/authRoute'
-
 
 
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-          <AuthRoute/>
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-
+        <AuthRoute/>
+        <Switch>
+          <Route path='/bossInfo' component={BossInfo}/>
+          <Route path='/geniusInfo' component={GeniusInfo}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/register' component={Register}/>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>

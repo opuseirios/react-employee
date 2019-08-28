@@ -94,4 +94,29 @@ router.get('/info', (req, res) => {
   })
 })
 
+//信息更新
+router.post('/update',(req,res)=>{
+  const userid = req.cookies.userid;
+  if(!userid){
+    return res.json({
+      code:1,
+      msg:'没有用户信息'
+    })
+  }
+  const body = req.body.data
+  User.findByIdAndUpdate(userid,body).then(doc=>{
+    if(!doc){
+      return res.json({
+        code:1,
+        msg:'数据库错误'
+      })
+    }
+    const data = Object.assign({},{
+      user:doc.user,
+      type:doc.type
+    },body)
+    return res.json({code:0,data})
+  })
+})
+
 module.exports = router;

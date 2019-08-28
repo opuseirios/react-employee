@@ -88,3 +88,18 @@ export function login({user,pwd}) {
 export function loadData(userinfo) {
    return {type:LOAD_DATA,payload: userinfo}
 }
+
+export function update(data) {
+  return dispatch =>{
+    axios.post('/user/update',{
+      data
+    }).then(res=>{
+      let data = res.data;
+      if(data.code === 0){
+        return dispatch(authSuccess(data.data))
+      }else {
+        return dispatch(errorMsg(data.msg))
+      }
+    })
+  }
+}

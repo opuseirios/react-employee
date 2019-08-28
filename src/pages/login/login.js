@@ -42,7 +42,7 @@ class Login extends React.Component{
         <WingBlank>
           <Button type='primary' onClick={this.handleLogin}>登录</Button>
           <WhiteSpace/>
-          <Button type='primary'>注册</Button>
+          <Button type='primary' onClick={()=>{this.props.history.push('/register')}}>注册</Button>
         </WingBlank>
       </div>
     )
