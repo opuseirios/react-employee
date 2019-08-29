@@ -12,6 +12,7 @@ import Login from './pages/login/login'
 import Register from './pages/register/register'
 import BossInfo from './pages/bossinfo/bossinfo'
 import GeniusInfo from './pages/geniusInfo/geniusInfo'
+import Chat from './pages/chat/chat'
 import AuthRoute from './components/authRoute/authRoute'
 import DashBoard from './components/dashBoard/dashBoard'
 
@@ -25,6 +26,7 @@ ReactDOM.render((
           <Route path='/geniusInfo' component={GeniusInfo}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route path='/chat/:user' component={Chat}/>
           <Route component={DashBoard}/>
         </Switch>
       </div>

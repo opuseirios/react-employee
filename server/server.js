@@ -6,15 +6,24 @@ const router = require('./routes')
 
 const app = express();
 
+//work with express
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+   socket.on('sendmsg',function (data) {
+     io.emit('recvmsg',data);
+   })
+});
 //链接mongoose
 mongoose.connect('mongodb://localhost:27017/employee');
 
 app.use(cookieParser());
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended: false}))
 
 router(app);
 
-app.listen(9000,()=>{
+server.listen(9000, () => {
   console.log('端口监听9000')
 })
