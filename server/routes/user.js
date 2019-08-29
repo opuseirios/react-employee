@@ -119,4 +119,22 @@ router.post('/update',(req,res)=>{
   })
 })
 
+//用户列表
+router.get('/list',(req,res)=>{
+  const {type} = req.query;
+  User.find({type}).then(users=>{
+    if(users.length){
+      return res.json({
+        code:0,
+        data:users
+      })
+    }else {
+      return res.json({
+        code:1,
+        msg:'没有用户'
+      })
+    }
+  })
+})
+
 module.exports = router;

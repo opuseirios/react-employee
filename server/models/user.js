@@ -8,6 +8,8 @@ const UserSchema = new Schema({
   desc:String,
   avatar:String,
   title:String,
+  money:String,
+  company:String,
   meta:{
     createdAt: {
       type:Date,

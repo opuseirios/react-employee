@@ -24,7 +24,7 @@ export const userReducer = (state = defaultState, action) => {
     case LOAD_DATA:
       return {...state,...action.payload}
     default:
-      return defaultState;
+      return state;
   }
 }
 

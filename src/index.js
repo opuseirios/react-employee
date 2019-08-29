@@ -13,7 +13,7 @@ import Register from './pages/register/register'
 import BossInfo from './pages/bossinfo/bossinfo'
 import GeniusInfo from './pages/geniusInfo/geniusInfo'
 import AuthRoute from './components/authRoute/authRoute'
-
+import DashBoard from './components/dashBoard/dashBoard'
 
 ReactDOM.render((
   <Provider store={store}>
@@ -25,6 +25,7 @@ ReactDOM.render((
           <Route path='/geniusInfo' component={GeniusInfo}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route component={DashBoard}/>
         </Switch>
       </div>
     </BrowserRouter>
