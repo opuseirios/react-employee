@@ -4,7 +4,8 @@ import {getRedirectTo} from "../util";
 //constants
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const ERROR_MSG = 'ERROR_MSG';
-const LOAD_DATA = 'LOAD_DATA'
+const LOAD_DATA = 'LOAD_DATA';
+const LOGOUT = 'LOGOUT'
 
 //reducer
 const defaultState = {
@@ -17,12 +18,13 @@ const defaultState = {
 export const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case AUTH_SUCCESS:
-      console.log(action.payload)
       return {...state,msg:'',redirectTo:getRedirectTo(action.payload),...action.payload};
     case ERROR_MSG:
       return {...state,msg:action.msg};
     case LOAD_DATA:
-      return {...state,...action.payload}
+      return {...state,...action.payload};
+    case LOGOUT:
+      return {...defaultState,redirectTo:'/login'}
     default:
       return state;
   }
@@ -102,4 +104,8 @@ export function update(data) {
       }
     })
   }
+}
+
+export function logout() {
+  return {type:LOGOUT}
 }
