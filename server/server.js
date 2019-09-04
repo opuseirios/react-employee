@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const router = require('./routes')
+const Chat = require('./models/chat')
 
 const app = express();
 
@@ -12,7 +13,11 @@ const io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
    socket.on('sendmsg',function (data) {
-     io.emit('recvmsg',data);
+     const {from,to,msg} = data;
+     const chatid = [from,to].sort().join('_');
+     Chat.create({chatid,from,to,content:msg}).then(doc=>{
+       io.emit('recvmsg',Object.assign({},doc._doc));
+     })
    })
 });
 //链接mongoose

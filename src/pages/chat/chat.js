@@ -1,8 +1,7 @@
 import React from 'react'
-import io from 'socket.io-client'
 import {InputItem, List} from 'antd-mobile'
-
-const socket = io('ws://localhost:9000');
+import {connect} from 'react-redux'
+import {getChatList as getList,sendMsg as send,recvMsg as recv} from "../../store/chat.redux";
 
 
 class Chat extends React.Component {
@@ -15,12 +14,8 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    const self = this;
-    socket.on('recvmsg', function (data) {
-      self.setState({
-        list: [...self.state.list, data.text]
-      })
-    })
+    this.props.getMsgList();
+    this.props.recvMsg();
   }
 
   handleChange(attr, value) {
@@ -30,15 +25,20 @@ class Chat extends React.Component {
   }
 
   handleSend() {
-    socket.emit('sendmsg', {text: this.state.text})
+    const from = this.props.user._id;
+    const to = this.props.match.params.user;
+    const msg = this.state.text;
+    // socket.emit('sendmsg', {text: this.state.text})
+    console.log({from,to,msg})
+    this.props.sendMsg({from,to,msg})
     this.setState({text: ''})
   }
 
   render() {
     return (
       <div>
-        {this.state.list.map(v => (
-          <p key={v}>{v}</p>
+        {this.props.chat.chatList.map(v => (
+          <p key={v._id}>{v.content}</p>
         ))}
         <div className='stick-footer'>
           <List>
@@ -51,4 +51,21 @@ class Chat extends React.Component {
   }
 }
 
-export default Chat;
+const mapState = (state)=>({
+  chat:state.chat,
+  user:state.user
+})
+
+const mapDispatch = (dispatch)=>({
+  getMsgList(){
+    dispatch(getList());
+  },
+  sendMsg({from,to,msg}){
+    dispatch(send({from,to,msg}))
+  },
+  recvMsg(){
+    dispatch(recv());
+  }
+})
+
+export default connect(mapState,mapDispatch)(Chat);
