@@ -6,12 +6,9 @@ import NavLink from '../navLink/navLink'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
+import Msg from '../msg/msg'
 import {getChatList as getList,sendMsg as send,recvMsg as recv} from "../../store/chat.redux";
 
-
-function Msg() {
-  return <h2>消息列表</h2>
-}
 
 class DashBoard extends React.Component{
   componentDidMount() {
