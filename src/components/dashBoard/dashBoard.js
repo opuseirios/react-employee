@@ -6,12 +6,20 @@ import NavLink from '../navLink/navLink'
 import Boss from '../boss/boss'
 import Genius from '../genius/genius'
 import User from '../user/user'
+import {getChatList as getList,sendMsg as send,recvMsg as recv} from "../../store/chat.redux";
+
 
 function Msg() {
   return <h2>消息列表</h2>
 }
 
 class DashBoard extends React.Component{
+  componentDidMount() {
+    if(this.props.chat.chatList.length===0){
+      this.props.getMsgList();
+      this.props.recvMsg();
+    }
+  }
   render(){
     const {pathname} = this.props.location;
     const user = this.props.user;
@@ -21,7 +29,7 @@ class DashBoard extends React.Component{
         text:'牛人',
         icon:'boss',
         title:'牛人列表',
-        component:Genius,
+        component:Boss,
         hide:user.type === 'genius'
       },
       {
@@ -29,7 +37,7 @@ class DashBoard extends React.Component{
         text:'Boss',
         icon:'job',
         title:'Boss列表',
-        component:Boss,
+        component:Genius,
         hide:user.type === 'boss'
       },
       {
@@ -59,18 +67,27 @@ class DashBoard extends React.Component{
              }
            </Switch>
         </div>
-        <NavLink data={navList} />
+        <NavLink data={navList} chat={this.props.chat} />
       </div>
     )
   }
 }
 
 const mapState = (state)=>({
+  chat:state.chat,
   user:state.user
 })
 
 const mapDispatch = (dispatch)=>({
-
+  getMsgList(){
+    dispatch(getList());
+  },
+  sendMsg({from,to,msg}){
+    dispatch(send({from,to,msg}))
+  },
+  recvMsg(){
+    dispatch(recv());
+  }
 })
 
 export default withRouter(connect(mapState,mapDispatch)(DashBoard))

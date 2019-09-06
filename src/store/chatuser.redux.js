@@ -21,6 +21,7 @@ export const chatUserReducer  = (state=defaultState,action)=>{
 
 export function getUserList(type) {
   return dispatch => {
+    console.log(type);
     axios.get(`/user/list?type=${type}`).then(res=>{
       let data = res.data;
       if(data.code === 0){
